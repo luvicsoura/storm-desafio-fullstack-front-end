@@ -1,10 +1,11 @@
-const { response } = require('express')
 const express = require('express')
+const cors = require('cors')
 const app = express()
-const port = 3000
+const port = 3001
 
 const users = require('./data/users.json')
 
+app.use(cors())
 app.get('/', (_, response) => {
 
   response.send('Ops! Caminho inválido. Por favor tente "/users"')
@@ -12,15 +13,16 @@ app.get('/', (_, response) => {
 
 app.get('/users', (request, response) => {
 
-  const users = getUsers(parseInt(request.query.offset), parseInt(request.query.limit))
+  const users = getUsers(request.query.offset, request.query.limit)
   response.status(200).json(users)
 })
 
-function getUsers(offset = 0, limit = users.length) {
+function getUsers(inputOffset = 0, inputLimit = users.length) {
 
   const queriedUsers = []
+  const offset = parseInt(inputOffset)
+  const limit = parseInt(inputLimit)
 
-  console.log(offset, limit, offset + limit)
   for(let i = offset; isRowValid(i, offset + limit); i++) {
 
     queriedUsers.push(users[i])
