@@ -20,7 +20,7 @@ const Overlay = styled.div`
     background-color: rgba(255, 255, 255, 0.88);
 `
 
-const DashboardListItem = ({
+export const DashboardListItem = ({
     data = {},
     actions = []
 }) => {
@@ -68,5 +68,3 @@ const DashboardListItem = ({
         </TableRow>
     )
 }
-
-export default DashboardListItem

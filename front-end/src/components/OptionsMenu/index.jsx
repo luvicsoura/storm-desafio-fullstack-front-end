@@ -6,7 +6,7 @@ import HomeIcon from '@material-ui/icons/Home'
 import SettingsIcon from '@material-ui/icons/Settings'
 import PowerIcon from '@material-ui/icons/PowerSettingsNew'
 
-const OptionsMenu = ({
+export const OptionsMenu = ({
     children
 }) => (
     <Menu>
@@ -24,5 +24,3 @@ const OptionsMenu = ({
         </MenuItem>
     </Menu>
 )
-
-export default OptionsMenu

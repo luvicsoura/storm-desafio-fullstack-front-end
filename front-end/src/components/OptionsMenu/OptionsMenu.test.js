@@ -5,7 +5,7 @@ import HomeIcon from '@material-ui/icons/Home'
 import SettingsIcon from '@material-ui/icons/Settings'
 import PowerIcon from '@material-ui/icons/PowerSettingsNew'
 
-import OptionsMenu from './index.jsx'
+import { OptionsMenu } from './index.jsx'
 
 describe('<OptionsMenu />', function () {
 
