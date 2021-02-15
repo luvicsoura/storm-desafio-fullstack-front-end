@@ -9,7 +9,7 @@ export class UsersService {
     }
 
     async getUsers(filter, config) {
-        
+
         const response = await this.HTTPClient.get(
             `${this.config.baseUrl}/users`,
             {

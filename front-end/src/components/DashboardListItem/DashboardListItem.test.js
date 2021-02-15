@@ -1,19 +1,18 @@
 import { shallow } from 'enzyme'
 
 import Checkbox from '@material-ui/core/Checkbox'
-import TableCell from '@material-ui/core/TableCell'
 import DeleteIcon from '@material-ui/icons/Delete'
 import EditIcon from '@material-ui/icons/Edit'
 import Button from '@material-ui/core/Button'
 
-import { DashboardListItem } from './index.jsx'
+import { DashboardListItem, StyledTableCell, StyledCheckbox } from './index.jsx'
 
 describe('<DashboardListItem />', function () {
 
     it('Deve carregar caixa de seleção', function () {
 
         const wrapper = shallow(<DashboardListItem/>)
-        expect(wrapper.find(Checkbox)).toHaveLength(1)
+        expect(wrapper.find(StyledCheckbox)).toHaveLength(1)
     })
 
 
@@ -33,7 +32,7 @@ describe('<DashboardListItem />', function () {
         }
         const wrapper = shallow(<DashboardListItem data={dados} />)
 
-        expect(wrapper.find(TableCell)).toHaveLength(Object.keys(dados).length + 2)
+        expect(wrapper.find(StyledTableCell)).toHaveLength(Object.keys(dados).length + 2)
         expect(wrapper.text().includes('Westley')).toBe(true)
         expect(wrapper.text().includes('Eggle')).toBe(true)
         expect(wrapper.text().includes('weggle0@ucsd.edu')).toBe(true)
