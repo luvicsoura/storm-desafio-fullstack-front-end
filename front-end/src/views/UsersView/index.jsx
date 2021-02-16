@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
-import Container from '@material-ui/core/Container'
-import DeleteIcon from '@material-ui/icons/Delete'
-import EditIcon from '@material-ui/icons/Edit'
+
+import FilterIcon from '@material-ui/icons/Tune'
 
 import { UsersService } from 'services'
-import { DashboardList, DashboardListItem, Pagination } from 'components'
+import { AppBar } from 'components'
+import { UsersDashboard, FiltersDrawer, AppBarItems } from './components'
 
 import {
     BACKEND_URL,
@@ -14,53 +14,23 @@ import {
     PAGINATION_SHOW_FIRST,
     PAGINATION_SHOW_LAST,
     PAGINATION_SHOW_PREVIOUS,
-    PAGINATION_SHOW_NEXT,
+    PAGINATION_SHOW_NEXT
 } from 'config'
-
-const DASHBOARD_HEADERS = [
-    {
-        label: 'Usuário'
-    },
-    {
-        label: 'Email'
-    },
-    {
-        label: 'Data de inclusão',
-        style: {
-            textAlign: 'center'
-        }
-    },
-    {
-        label: 'Data de alteração',
-        style: {
-            textAlign: 'center'
-        }
-    },
-    {
-        label: 'Regras',
-        style: {
-            textAlign: 'center'
-        }
-    },
-    {
-        label: 'Status',
-        style: {
-            textAlign: 'center'
-        }
-    }
-]
+import { DASHBOARD_HEADERS, FILTERS_HELP_TEXT, FILTERS } from './config'
 
 const StyledPage = styled.div`
     display: flex;
     flex-direction: column;
 `
+
 export class UsersView extends Component{
 
     state = {
         users: [],
         page: 1,
         totalPages: 1,
-        totalItemsCount: 0
+        totalItemsCount: 0,
+        showFilters: false
     }
 
     constructor(props) {
@@ -96,17 +66,12 @@ export class UsersView extends Component{
         this.setState({
             users: newUserData,
             totalItemsCount: totalCount,
-            totalPages: totalCount / USERS_PER_PAGE
+            totalPages: Math.floor(totalCount / USERS_PER_PAGE)
         })
     }
 
     calculateOffsetFromPage(page = 1) {
         return parseInt(page) * USERS_PER_PAGE - USERS_PER_PAGE
-    }
-
-    calculatePageNumber(lastItemPosition) {
-        
-        return Math.ceil(lastItemPosition / USERS_PER_PAGE)
     }
 
     transformUserData(user) {
@@ -154,88 +119,46 @@ export class UsersView extends Component{
         }
     }
 
-    createListItem(data, key) {
-        return (
-            <DashboardListItem
-                key = {key}
-                style = {{
-                    backgroundColor: (key % 2) ? '#F5F5F5' : '#E9E9E9'
-                }}
-                data = {{
-                    user_name: {
-                        value: data.user_name,
-                        style: {
-                            textTransform: 'uppercase'
-                        }
-                    },
-                    email: data.email,
-                    created_date: {
-                        value: data.created_date,
-                        style: {
-                            textAlign: 'center'
-                        }
-                    },
-                    updated_date: {
-                        value: data.updated_date,
-                        style: {
-                            textAlign: 'center'
-                        }
-                    },
-                    roles: {
-                        value: data.roles,
-                        style: {
-                            textAlign: 'center'
-                        }
-                    },
-                    status: {
-                        value: data.status,
-                        style: {
-                            color: data.status === 'ativo' ? '#31BA1F' : '#D83367',
-                            fontWeight: 500,
-                            textTransform: 'uppercase',
-                            textAlign: 'center'
-                        }
-                    }
-                }}
-                actions = {[
-                    {
-                        label: <DeleteIcon />
-                    },
-                    {
-                        label: <EditIcon />
-                    }
-                ]}
-            />
-        )
-    }
-
     setPage(page) {
         this.setState({ page })
     }
 
+    showFilters = () => {
+        this.setState({showFilters: true})
+    }
+
+    hideFilters = () => {
+        this.setState({showFilters: false})
+    }
+
     render = () => (
         <StyledPage className = "UsersPage">
-            <Container
-                maxWidth = { false }
-                style = {{maxWidth: '1360px'}}
+            <FiltersDrawer
+                showFilters = { this.state.showFilters }
+                anchor = "right"
+                title = "Filtros"
+                HeaderIcon = { FilterIcon }
+                onClose = { this.hideFilters }
+                text = { FILTERS_HELP_TEXT }
+                filters = { FILTERS }
+            />
+            <AppBar 
+                position="sticky"
             >
-                <DashboardList
-                    headers = { DASHBOARD_HEADERS }
-                >
-                    {this.state.users.map(
-                        this.createListItem
-                    )}
-                </DashboardList>
-                <Pagination
-                    shape = "rounded"
-                    count = {this.state.totalPages}
-                    hidePreviousButton = { !PAGINATION_SHOW_PREVIOUS }
-                    hideNextButton = { !PAGINATION_SHOW_NEXT }
-                    showFirstButton = { PAGINATION_SHOW_FIRST }
-                    showLastButton = { PAGINATION_SHOW_LAST }
-                    onChange = {(_, page) => this.setPage(page)}
+                <AppBarItems
+                    onFilterButtonClick = { this.showFilters }
                 />
-            </Container>
+            </AppBar>
+            <UsersDashboard
+                users = { this.state.users }
+                headers = { DASHBOARD_HEADERS }
+                totalPages = {this.state.totalPages}
+                hidePreviousButton = { !PAGINATION_SHOW_PREVIOUS }
+                hideNextButton = { !PAGINATION_SHOW_NEXT }
+                showFirstButton = { PAGINATION_SHOW_FIRST }
+                showLastButton = { PAGINATION_SHOW_LAST }
+                onPaginationChange = { (_, page) => this.setPage(page) }  
+            />
         </StyledPage>
     )
 }

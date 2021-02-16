@@ -1,26 +1,37 @@
 import React from 'react'
+import styled from 'styled-components'
 
-import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import HomeIcon from '@material-ui/icons/Home'
 import SettingsIcon from '@material-ui/icons/Settings'
 import PowerIcon from '@material-ui/icons/PowerSettingsNew'
 
+const StyledMenu = styled.nav`
+    display: inline-flex;
+`
+
+export const StyledMenuItem = styled(MenuItem)`
+    && {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+`
+
 export const OptionsMenu = ({
     children
 }) => (
-    <Menu>
+    <StyledMenu>
         <div>
             {children}
         </div>
-        <MenuItem>
+        <StyledMenuItem>
             <HomeIcon />
-        </MenuItem>
-        <MenuItem>
+        </StyledMenuItem>
+        <StyledMenuItem>
             <SettingsIcon />
-        </MenuItem>
-        <MenuItem>
+        </StyledMenuItem>
+        <StyledMenuItem>
             <PowerIcon />
-        </MenuItem>
-    </Menu>
+        </StyledMenuItem>
+    </StyledMenu>
 )

@@ -25,11 +25,15 @@ const StyledTableCell = styled(TableCell)`
     }
 `
 
+const StyledTable = styled(Table)`
+    margin: 24px 0;
+`
+
 export const DashboardList = ({
     headers = [],
     children
 }) => (
-    <Table>
+    <StyledTable>
         {!!headers.length && (
             <StyledTableHead>
                 <TableRow>
@@ -49,5 +53,5 @@ export const DashboardList = ({
         <TableBody>
             { children }
         </TableBody>
-    </Table>
+    </StyledTable>
 )

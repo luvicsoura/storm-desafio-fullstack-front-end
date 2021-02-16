@@ -1,11 +1,10 @@
 import { shallow } from 'enzyme'
 
-import MenuItem from '@material-ui/core/MenuItem'
 import HomeIcon from '@material-ui/icons/Home'
 import SettingsIcon from '@material-ui/icons/Settings'
 import PowerIcon from '@material-ui/icons/PowerSettingsNew'
 
-import { OptionsMenu } from './index.jsx'
+import { OptionsMenu, StyledMenuItem } from './index.jsx'
 
 describe('<OptionsMenu />', function () {
 
@@ -13,7 +12,7 @@ describe('<OptionsMenu />', function () {
         
         const wrapper = shallow(<OptionsMenu />)
         
-        expect(wrapper.find(MenuItem)).toHaveLength(3)
+        expect(wrapper.find(StyledMenuItem)).toHaveLength(3)
     })
 
     it('Deve conter um botão com ícone da home', function () {

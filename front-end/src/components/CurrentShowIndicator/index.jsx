@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 import TvIcon from '@material-ui/icons/Tv'
-import Grid from '@material-ui/core/Grid'
 
 const StyledIndicator = styled.div`
     color: #E9E9E9;

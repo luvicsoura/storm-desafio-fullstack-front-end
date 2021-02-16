@@ -55,6 +55,7 @@ export const Pagination = (props) => {
                         children = (
                             <StyledButton 
                                 selected = {selected}
+                                data-testid = "btn-page"
                                 {...item}
                             >
                                 {page}
